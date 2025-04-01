@@ -9,7 +9,7 @@ export default async function Dashboard() {
 	}
 
 	return (
-		<div>
+		<div className="my-5">
 			Dashboard
 			<Separator className="my-4" />
 			<pre>{JSON.stringify(session?.user, null, 2)}</pre>

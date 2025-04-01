@@ -5,18 +5,15 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuPortal,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, Layers, User } from 'lucide-react';
+import { Heart, Layers, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
-import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs/components';
+import { signOut } from '@/app/utils/auth';
+import { GeneralSubmitButton } from '../general/SubmitButton';
+import Image from 'next/image';
 
 interface props {
 	name: string;
@@ -31,13 +28,14 @@ export function UserDropDown({ name, email, profileImage, avatarFallback }: prop
 			<DropdownMenuTrigger>
 				{profileImage ? (
 					<>
-						<Avatar className="w-10 h-10 cursor-pointer">
-							<AvatarImage
+						<div className="relative size-10 cursor-pointer overflow-hidden rounded-full">
+							<Image
 								src={profileImage}
 								alt="Profile image"
+								fill
+								className="object-cover"
 							/>
-							<AvatarFallback>{avatarFallback}</AvatarFallback>
-						</Avatar>
+						</div>
 					</>
 				) : (
 					<Button
@@ -84,7 +82,18 @@ export function UserDropDown({ name, email, profileImage, avatarFallback }: prop
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem>
-					<LogoutLink className={`${buttonVariants({ variant: 'outline' })} w-full`}>Sign out</LogoutLink>
+					<form
+						action={async () => {
+							'use server';
+							await signOut({ redirectTo: '/' });
+						}}
+						className="w-full">
+						<GeneralSubmitButton
+							label="Logout"
+							variant="outline"
+							icon={<LogOut className="size-4" />}
+						/>
+					</form>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

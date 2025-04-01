@@ -5,6 +5,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 		<div>
 			<NavBar />
 			{children}
+			<div className="min-h-[2000px] bg-stone-700"></div>
+			<footer className="min-h-96 bg-stone-900"></footer>
 		</div>
 	);
 }

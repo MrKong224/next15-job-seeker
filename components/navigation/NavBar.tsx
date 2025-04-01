@@ -12,7 +12,7 @@ import NavBarAuthjs from './NavBarAuthjs';
 
 export function NavBar() {
 	return (
-		<nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+		<nav className="sticky top-0 z-50 w-full shadow-md bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 			<div className="container mx-auto flex justify-between items-center py-5">
 				<Link
 					href="/"
@@ -30,6 +30,12 @@ export function NavBar() {
 
 				{/* Desktop Navigation */}
 				<div className="hidden md:flex items-center gap-5">
+					<Link
+						href="/dashboard"
+						className={buttonVariants({ variant: 'ghost' })}
+						passHref>
+						Dashboard
+					</Link>
 					<Link
 						href="/shadcn-guild"
 						className={buttonVariants({ variant: 'ghost' })}

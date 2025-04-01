@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-import Github from '@/components/icons/Githubs';
+import Github from '@/components/icons/Github';
 import Google from '@/components/icons/Google';
 import { auth, signIn } from '../../app/utils/auth';
 import { GeneralSubmitButton } from '@/components/general/SubmitButton';
