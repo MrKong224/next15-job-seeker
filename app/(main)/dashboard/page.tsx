@@ -1,15 +1,18 @@
+import { auth } from '@/app/utils/auth';
 import { Separator } from '@/components/ui/separator';
-import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
-
+import { redirect } from 'next/navigation';
 export default async function Dashboard() {
-	const { getUser } = getKindeServerSession();
-	const user = await getUser();
+	const session = await auth();
+
+	if (!session?.user) {
+		redirect('/login');
+	}
 
 	return (
 		<div>
 			Dashboard
 			<Separator className="my-4" />
-			<pre>{JSON.stringify(user, null, 2)}</pre>
+			<pre>{JSON.stringify(session?.user, null, 2)}</pre>
 		</div>
 	);
 }
