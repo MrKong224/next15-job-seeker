@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 import Github from '@/components/icons/Github';
 import Google from '@/components/icons/Google';
-import { auth, signIn } from '../../app/utils/auth';
+import { auth, signIn } from '../../utils/auth';
 import { GeneralSubmitButton } from '@/components/general/SubmitButton';
 import { redirect } from 'next/navigation';
 
@@ -25,7 +25,7 @@ export async function LoginForm() {
 						<form
 							action={async () => {
 								'use server';
-								await signIn('google', { redirectTo: '/' });
+								await signIn('google', { redirectTo: '/onboarding' });
 							}}>
 							<GeneralSubmitButton
 								icon={<Google className="size-4" />}
@@ -36,7 +36,7 @@ export async function LoginForm() {
 						<form
 							action={async () => {
 								'use server';
-								await signIn('github', { redirectTo: '/' });
+								await signIn('github', { redirectTo: '/onboarding' });
 							}}>
 							<GeneralSubmitButton
 								icon={<Github className="size-4" />}

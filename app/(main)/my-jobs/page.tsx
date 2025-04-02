@@ -1,3 +1,3 @@
-export default function MyJobs() {
+export default function MyJobsPage() {
 	return <div>My Jobs</div>;
 }
