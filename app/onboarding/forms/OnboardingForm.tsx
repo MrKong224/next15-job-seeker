@@ -7,6 +7,8 @@ import { TUserType } from '@/types';
 import UserTypeSelectionForm from './UserTypeSelectionForm';
 import CompanyForm from './CompanyForm';
 import JobSeekerForm from './JobSeekerForm';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 export default function OnboardingForm() {
 	const [step, setStep] = useState(1);
@@ -15,6 +17,11 @@ export default function OnboardingForm() {
 	const handleUserTypeChange = (type: TUserType) => {
 		setUserType(type);
 		setStep(step + 1);
+	};
+
+	const handleBack = () => {
+		setUserType(null);
+		setStep(1);
 	};
 
 	const renderStep = () => {
@@ -41,11 +48,23 @@ export default function OnboardingForm() {
 				</div>
 				<div className="text-4xl font-bold uppercase">Seeker</div>
 			</div>
-			<Card className="w-full max-w-lg">
-				<CardContent>
-					<div className="flex flex-col gap-4">{renderStep()}</div>
-				</CardContent>
-			</Card>
+			<div className="w-full max-w-xl">
+				{step > 1 && (
+					<Button
+						type="button"
+						variant="link"
+						className="w-fit text-muted-foreground hover:text-foreground hover:no-underline"
+						onClick={() => handleBack()}>
+						<ArrowLeft className="h-4 w-4" />
+						Back
+					</Button>
+				)}
+				<Card className="w-full max-w-xl">
+					<CardContent>
+						<div className="flex flex-col gap-4">{renderStep()}</div>
+					</CardContent>
+				</Card>
+			</div>
 		</>
 	);
 }

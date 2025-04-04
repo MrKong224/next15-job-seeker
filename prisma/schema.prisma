@@ -13,10 +13,17 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+
+  onboardingCompleted Boolean   @default(false)
+  userType            UserType?
+
+  Company   Company?
+  JobSeeker JobSeeker?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -53,4 +60,38 @@ model VerificationToken {
   expires    DateTime
 
   @@id([identifier, token])
+}
+
+enum UserType {
+  COMPANY
+  JOB_SEEKER
+}
+
+model Company {
+  id       String  @id @default(uuid())
+  name     String
+  location String
+  about    String
+  logo     String
+  website  String
+  xAccount String?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model JobSeeker {
+  id     String @id @default(uuid())
+  name   String
+  about  String
+  resume String
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

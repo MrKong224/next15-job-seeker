@@ -4,7 +4,7 @@ import Logo from '@/public/logo.png';
 import Image from 'next/image';
 
 import { ModeToggle } from '@/components/navigation/ModeToggle';
-import { buttonVariants } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 
 import MobileNav from './MobileNav';
 import NavBarAuthjs from './NavBarAuthjs';
@@ -30,6 +30,12 @@ export function NavBar() {
 
 				{/* Desktop Navigation */}
 				<div className="hidden md:flex items-center gap-5">
+					<Link
+						href="/onboarding"
+						className={buttonVariants({ variant: 'ghost' })}
+						passHref>
+						Onboarding
+					</Link>
 					<Link
 						href="/dashboard"
 						className={buttonVariants({ variant: 'ghost' })}
