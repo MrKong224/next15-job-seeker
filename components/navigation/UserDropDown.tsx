@@ -25,7 +25,7 @@ interface props {
 export function UserDropDown({ name, email, profileImage, avatarFallback }: props) {
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger>
+			<DropdownMenuTrigger asChild>
 				{profileImage ? (
 					<>
 						<div className="relative size-10 cursor-pointer overflow-hidden rounded-full">
@@ -39,17 +39,18 @@ export function UserDropDown({ name, email, profileImage, avatarFallback }: prop
 					</>
 				) : (
 					<Button
-						variant="outline"
-						className="cursor-pointer">
+						variant="ghost"
+						className="h-auto p-0 hover:bg-transparent dark:hover:bg-transparent">
 						<User />
 					</Button>
 				)}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent
-				className="w-56"
-				align="end">
+				className="w-48"
+				align="center">
 				<DropdownMenuLabel className="flex min-w-0 flex-col">
-					<span className="truncate text-sm font-medium text-foreground text-center">{email}</span>
+					<span className="truncate text-sm font-medium text-foreground capitalize">{name}</span>
+					<span className="truncate text-xs text-muted-foreground">{email}</span>
 				</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
@@ -63,7 +64,7 @@ export function UserDropDown({ name, email, profileImage, avatarFallback }: prop
 								className="opacity-60"
 								aria-hidden="true"
 							/>
-							<span>Saved Jobs</span>
+							<span>Favorite Jobs</span>
 						</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem>

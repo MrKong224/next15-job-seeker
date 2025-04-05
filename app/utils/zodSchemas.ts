@@ -15,3 +15,15 @@ export const jobSeekerSchema = z.object({
 	resume: z.string().min(1, 'Please upload a resume'),
 	resumeFileName: z.string().optional(),
 });
+
+export const jobPostSchema = z.object({
+	jobTitle: z.string().min(1, 'Job title is required'),
+	employmentType: z.string().min(1, 'Employment type is required'),
+	location: z.string().min(1, 'Location is required'),
+	salaryFrom: z.number().min(0, 'Salary from is required'),
+	salaryTo: z.number().min(0, 'Salary to is required'),
+	jobDescription: z.string().min(1, 'Job description is required'),
+	benefits: z.array(z.string()).min(1, 'Benefits are required'),
+	listingDuration: z.number().min(1, 'Listing duration is required'),
+	status: z.string().min(1, 'Status is required'),
+});

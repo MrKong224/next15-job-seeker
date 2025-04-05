@@ -7,13 +7,18 @@ import { ModeToggle } from '@/components/navigation/ModeToggle';
 import { Button, buttonVariants } from '@/components/ui/button';
 
 import MobileNav from './MobileNav';
-import NavBarAuthjs from './NavBarAuthjs';
+
+import { auth } from '@/app/utils/auth';
+import { UserDropDown } from './UserDropDown';
+
 // import NavBarKindeAuth from './NavBarKindeAuth';
 
-export function NavBar() {
+export async function NavBar() {
+	const session = await auth();
+
 	return (
-		<nav className="sticky top-0 z-50 w-full shadow-md bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-			<div className="container mx-auto flex justify-between items-center py-5">
+		<nav className="sticky top-0 z-50 w-full shadow-md bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+			<div className="flex justify-between items-center py-5">
 				<Link
 					href="/"
 					className="flex items-center justify-center space-x-2">
@@ -42,21 +47,29 @@ export function NavBar() {
 						passHref>
 						Dashboard
 					</Link>
-					<Link
-						href="/shadcn-guild"
-						className={buttonVariants({ variant: 'ghost' })}
-						passHref>
-						Shadcn Guild
-					</Link>
 					<ModeToggle />
-					<Link
-						href="/post-job"
-						className={buttonVariants({ size: 'lg' })}
-						passHref>
-						Post Job
-					</Link>
-					<NavBarAuthjs />
-					{/* <NavBarKindeAuth /> */}
+					{session?.user ? (
+						<>
+							<Link
+								href="/post-job"
+								className={buttonVariants({ size: 'lg' })}
+								passHref>
+								Post Job
+							</Link>
+							<UserDropDown
+								name={session.user.name as string}
+								email={session.user.email as string}
+								profileImage={session.user.image as string}
+								avatarFallback={session.user.name?.charAt(0) as string}
+							/>
+						</>
+					) : (
+						<Link
+							href="/login"
+							className={buttonVariants({ variant: 'default', size: 'lg' })}>
+							Login
+						</Link>
+					)}
 				</div>
 
 				{/* Mobile Navigation */}

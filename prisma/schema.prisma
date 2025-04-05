@@ -7,6 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserType {
+  COMPANY
+  JOB_SEEKER
+}
+
+enum EmploymentType {
+  FULLTIME
+  PARTTIME
+  CONTRACT
+  INTERNSHIP
+}
+
+enum JobPostStatus {
+  DRAFT
+  ACTIVE
+  EXPIRED
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -62,11 +80,6 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-enum UserType {
-  COMPANY
-  JOB_SEEKER
-}
-
 model Company {
   id       String  @id @default(uuid())
   name     String
@@ -76,8 +89,9 @@ model Company {
   website  String
   xAccount String?
 
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String    @unique
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  JobPost JobPost[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -92,6 +106,27 @@ model JobSeeker {
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model JobPost {
+  id String @id @default(uuid())
+
+  jobTitle        String
+  employmentType  EmploymentType
+  location        String
+  salaryFrom      Int
+  salaryTo        Int
+  jobDescription  String
+  listingDuration Int
+
+  benefits String[]
+  status   JobPostStatus @default(DRAFT)
+
+  companyId String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
