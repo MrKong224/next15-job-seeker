@@ -40,6 +40,26 @@ export const ourFileRouter = {
 			// !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
 			return { uploadedBy: metadata.userId };
 		}),
+
+	// Define as many FileRoutes as you like, each with a unique routeSlug
+	resumeUploader: f({
+		'application/pdf': {
+			maxFileSize: '2MB',
+			maxFileCount: 1,
+		},
+	})
+		.middleware(async ({ req }) => {
+			const sessionUser = await requireUser();
+
+			if (!sessionUser) {
+				redirect('/login');
+			}
+
+			return { userId: sessionUser?.id };
+		})
+		.onUploadComplete(async ({ metadata, file }) => {
+			return { uploadedBy: metadata.userId, fileName: file.name };
+		}),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

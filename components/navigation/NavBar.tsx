@@ -49,6 +49,12 @@ export function NavBar() {
 						Shadcn Guild
 					</Link>
 					<ModeToggle />
+					<Link
+						href="/post-job"
+						className={buttonVariants({ size: 'lg' })}
+						passHref>
+						Post Job
+					</Link>
 					<NavBarAuthjs />
 					{/* <NavBarKindeAuth /> */}
 				</div>

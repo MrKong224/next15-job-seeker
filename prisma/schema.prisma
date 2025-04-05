@@ -84,10 +84,11 @@ model Company {
 }
 
 model JobSeeker {
-  id     String @id @default(uuid())
-  name   String
-  about  String
-  resume String
+  id             String  @id @default(uuid())
+  name           String
+  about          String
+  resume         String
+  resumeFileName String?
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
