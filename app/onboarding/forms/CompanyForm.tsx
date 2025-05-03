@@ -1,7 +1,7 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { companySchema } from '@/utils/zodSchemas';
+import { companySchema } from '@/features/utils/zodSchemas';
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import {
@@ -13,15 +13,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { countryList } from '@/utils/countriesList';
+import { countryList } from '@/features/utils/countriesList';
 import { Textarea } from '@/components/ui/textarea';
-import { UploadDropzone } from '@/utils/UploadThing';
+import { UploadDropzone } from '@/features/utils/UploadThing';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import Image from 'next/image';
 import { XIcon, Loader2 } from 'lucide-react';
-import { createCompany } from '../../../action';
+import { createCompany } from '../../../features/action';
 import { useRouter } from 'next/navigation';
 
 export default function CompanyForm() {

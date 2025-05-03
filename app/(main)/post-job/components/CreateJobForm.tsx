@@ -1,6 +1,6 @@
 'use client';
 
-import { jobPostSchema } from '@/utils/zodSchemas';
+import { jobPostSchema } from '@/features/utils/zodSchemas';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -19,38 +19,51 @@ import {
 	SelectGroup,
 	SelectLabel,
 } from '@/components/ui/select';
-import { countryList } from '@/utils/countriesList';
+import { countryList } from '@/features/utils/countriesList';
 import SalaryRangeSelector from './SalaryRangeSelector';
 import TextEditor from '@/components/richTextEditor/TextEditor';
 import { BenefitsSelector } from './BenefitsSelector';
 import { JobListingDuration } from './JobListingDuration';
-interface Props {
-	companyName: string;
-	companyAbout: string;
-	companyLocation: string;
-	companyWebsite: string;
-}
+import { createJobPost } from '@/features/action';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { EEmploymentType, EJobPostStatus } from '@/types';
 
-export default function CreateJobForm({ companyName, companyAbout, companyLocation, companyWebsite }: Props) {
+export default function CreateJobForm() {
+	const router = useRouter();
 	const [pending, setPending] = useState(false);
 
 	const form = useForm<z.infer<typeof jobPostSchema>>({
 		resolver: zodResolver(jobPostSchema),
 		defaultValues: {
 			jobTitle: '',
-			employmentType: '',
+			employmentType: EEmploymentType.FULLTIME,
 			location: '',
 			salaryFrom: 0,
 			salaryTo: 0,
 			jobDescription: '',
 			benefits: [],
 			listingDuration: 30,
-			status: 'DRAFT',
+			status: EJobPostStatus.DRAFT,
 		},
 	});
 
-	const onSubmit = (data: z.infer<typeof jobPostSchema>) => {
-		console.log(data);
+	const onSubmit = async (data: z.infer<typeof jobPostSchema>) => {
+		try {
+			setPending(true);
+			await createJobPost(data);
+			router.push('/dashboard');
+			toast.success('Job posted successfully');
+		} catch (error) {
+			console.log(error);
+			if (error instanceof Error && error.message !== 'NEXT_REDIRECT') {
+				toast.error(error.message);
+			} else {
+				toast.error('Something went wrong. Please try again.');
+			}
+		} finally {
+			setPending(false);
+		}
 	};
 
 	return (
@@ -211,6 +224,8 @@ export default function CreateJobForm({ companyName, companyAbout, companyLocati
 
 				<Button
 					type="submit"
+					size={'lg'}
+					className="w-full"
 					disabled={pending}>
 					{pending ? (
 						<>

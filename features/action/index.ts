@@ -1,11 +1,13 @@
 'use server';
 
-import { requireUser } from '@/utils/requireUser';
-import { companySchema, jobSeekerSchema } from '@/utils/zodSchemas';
+import { requireUser } from '@/features/utils/requireUser';
+import { companySchema, jobSeekerSchema, jobPostSchema } from '@/features/utils/zodSchemas';
 import { z } from 'zod';
-import { prisma } from '@/utils/db';
-import arcjet, { detectBot, shield, slidingWindow } from '@/utils/arcjet';
+import { prisma } from '@/features/utils/db';
+import arcjet, { detectBot, shield, slidingWindow } from '@/features/utils/arcjet';
 import { request } from '@arcjet/next';
+import { EEmploymentType, EJobPostStatus } from '@/types';
+import { redirect } from 'next/navigation';
 
 const aj = arcjet
 	.withRule(
@@ -26,6 +28,7 @@ export const getCompany = async (userId: string) => {
 	const data = await prisma.company.findUnique({
 		where: { userId: userId },
 		select: {
+			id: true,
 			name: true,
 			location: true,
 			about: true,
@@ -84,9 +87,7 @@ export async function createJobSeeker(data: z.infer<typeof jobSeekerSchema>) {
 	}
 
 	// Server-side validation
-	console.log('🚀 ~ createJobSeeker ~ data:', data);
 	const validatedData = jobSeekerSchema.parse(data);
-	console.log('🚀 ~ createJobSeeker ~ validatedData:', validatedData);
 
 	await prisma.user.update({
 		where: {
@@ -100,5 +101,53 @@ export async function createJobSeeker(data: z.infer<typeof jobSeekerSchema>) {
 			},
 		},
 	});
+	return { success: true };
+}
+
+export async function createJobPost(data: z.infer<typeof jobPostSchema>) {
+	const user = await requireUser();
+
+	// Access the request object so Arcjet can analyze it
+	const req = await request();
+
+	// Call Arcjet protect
+	const decision = await aj.protect(req);
+
+	if (decision.isDenied()) {
+		return { error: 'Forbidden', reason: decision.reason };
+	}
+
+	// Server-side validation
+	const validatedData = jobPostSchema.parse(data);
+
+	// Get company id from user
+	const company = await prisma.company.findUnique({
+		where: { userId: user.id },
+		select: { id: true },
+	});
+
+	if (!company?.id) {
+		throw new Error('Please create a company before posting a job');
+	}
+
+	// Create job post
+	await prisma.jobPost.create({
+		data: {
+			companyId: company.id,
+			jobTitle: validatedData.jobTitle,
+			employmentType: validatedData.employmentType,
+			location: validatedData.location,
+			salaryFrom: validatedData.salaryFrom,
+			salaryTo: validatedData.salaryTo,
+			jobDescription: validatedData.jobDescription,
+			benefits: validatedData.benefits,
+			listingDuration: validatedData.listingDuration,
+			status: validatedData.status,
+		},
+	});
+
+	console.log('🚀 ~ createJobPost ~ validatedData:', validatedData);
+	console.log('🚀 ~ createJobPost ~ company:', company);
+
 	return { success: true };
 }

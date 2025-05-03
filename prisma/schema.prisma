@@ -21,7 +21,7 @@ enum EmploymentType {
 
 enum JobPostStatus {
   DRAFT
-  ACTIVE
+  PUBLISHED
   EXPIRED
 }
 
@@ -115,7 +115,7 @@ model JobPost {
   id String @id @default(uuid())
 
   jobTitle        String
-  employmentType  EmploymentType
+  employmentType  EmploymentType @default(FULLTIME)
   location        String
   salaryFrom      Int
   salaryTo        Int

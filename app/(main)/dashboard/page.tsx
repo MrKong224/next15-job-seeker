@@ -1,4 +1,4 @@
-import { auth } from '@/utils/auth';
+import { auth } from '@/features/utils/auth';
 import { Separator } from '@/components/ui/separator';
 import { redirect } from 'next/navigation';
 export default async function DashboardPage() {

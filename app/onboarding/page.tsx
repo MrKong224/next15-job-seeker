@@ -1,6 +1,6 @@
 import OnboardingForm from '@/app/onboarding/forms/OnboardingForm';
-import { requireUser } from '@/utils/requireUser';
-import { prisma } from '@/utils/db';
+import { requireUser } from '@/features/utils/requireUser';
+import { prisma } from '@/features/utils/db';
 import { redirect } from 'next/navigation';
 
 const hasFinishedOnBoarding = async (userId: string) => {
@@ -12,8 +12,6 @@ const hasFinishedOnBoarding = async (userId: string) => {
 			onboardingCompleted: true,
 		},
 	});
-
-	console.log('🚀 ~ hasFinishedOnBoarding ~ userInfo:', userInfo);
 
 	return userInfo?.onboardingCompleted;
 };

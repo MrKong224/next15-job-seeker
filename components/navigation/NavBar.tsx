@@ -8,7 +8,7 @@ import { Button, buttonVariants } from '@/components/ui/button';
 
 import MobileNav from './MobileNav';
 
-import { auth } from '@/utils/auth';
+import { auth } from '@/features/utils/auth';
 import { UserDropDown } from './UserDropDown';
 
 // import NavBarKindeAuth from './NavBarKindeAuth';

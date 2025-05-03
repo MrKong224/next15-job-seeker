@@ -14,7 +14,7 @@
     "@auth/prisma-adapter": "^2.8.0",
     "@hookform/resolvers": "^4.1.3",
     "@kinde-oss/kinde-auth-nextjs": "^2.5.6",
-    "@prisma/client": "^6.5.0",
+    "@prisma/client": "latest",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-aspect-ratio": "^1.1.2",
@@ -80,7 +80,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.4",
-    "prisma": "^6.5.0",
+    "prisma": "latest",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

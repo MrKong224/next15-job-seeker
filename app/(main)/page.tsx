@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { auth } from '@/utils/auth';
+import { auth } from '@/features/utils/auth';
 import { Separator } from '@/components/ui/separator';
 export default async function Home() {
 	const session = await auth();
@@ -8,7 +8,6 @@ export default async function Home() {
 			<h1>Hello World</h1>
 			<Separator className="my-4" />
 			<pre>{JSON.stringify(session, null, 2)}</pre>
-			<Separator className="my-4" />
 		</div>
 	);
 }

@@ -1,6 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { jobDurationPricing } from '@/utils/jobDurationPricing';
+import { jobDurationPricing } from '@/features/utils/jobDurationPricing';
 import { Card } from '@/components/ui/card';
 import { ControllerRenderProps } from 'react-hook-form';
 

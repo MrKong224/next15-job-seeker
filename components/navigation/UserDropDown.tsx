@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Heart, Layers, LogOut, User } from 'lucide-react';
 import Link from 'next/link';
-import { signOut } from '@/utils/auth';
+import { signOut } from '@/features/utils/auth';
 import { GeneralSubmitButton } from '../general/SubmitButton';
 import Image from 'next/image';
 
