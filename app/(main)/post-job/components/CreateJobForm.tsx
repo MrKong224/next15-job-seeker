@@ -1,6 +1,6 @@
 'use client';
 
-import { jobPostSchema } from '@/app/utils/zodSchemas';
+import { jobPostSchema } from '@/utils/zodSchemas';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -19,11 +19,11 @@ import {
 	SelectGroup,
 	SelectLabel,
 } from '@/components/ui/select';
-import { countryList } from '@/app/utils/countriesList';
+import { countryList } from '@/utils/countriesList';
 import SalaryRangeSelector from './SalaryRangeSelector';
 import TextEditor from '@/components/richTextEditor/TextEditor';
 import { BenefitsSelector } from './BenefitsSelector';
-
+import { JobListingDuration } from './JobListingDuration';
 interface Props {
 	companyName: string;
 	companyAbout: string;
@@ -190,6 +190,25 @@ export default function CreateJobForm({ companyName, companyAbout, companyLocati
 						<div className="grid md:grid-cols-2 gap-6"></div>
 					</CardContent>
 				</Card>
+
+				<Card>
+					<CardHeader>
+						<CardTitle className="text-2xl font-bold">Job Duration</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<FormField
+							control={form.control}
+							name="listingDuration"
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<JobListingDuration field={field as unknown as ControllerRenderProps} />
+									</FormControl>
+								</FormItem>
+							)}></FormField>
+					</CardContent>
+				</Card>
+
 				<Button
 					type="submit"
 					disabled={pending}>

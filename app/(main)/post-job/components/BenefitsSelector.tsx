@@ -1,4 +1,4 @@
-import { benefits } from '@/app/utils/benefitsList';
+import { benefits } from '@/utils/benefitsList';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ControllerRenderProps } from 'react-hook-form';

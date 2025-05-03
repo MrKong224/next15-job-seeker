@@ -5,7 +5,10 @@ import ArcJetLogo from '@/public/arcjet.jpg';
 import InngestLogo from '@/public/inngest-locale.png';
 import Image from 'next/image';
 import CreateJobForm from './components/CreateJobForm';
-
+import { getCompany } from '@/action';
+import { requireUser } from '@/utils/requireUser';
+import CompanyProfile from './components/CompaynProfile';
+import { TCompanyProfile } from '@/types';
 const companies = [
 	{ id: 0, name: 'ArcJet', logo: ArcJetLogo },
 	{ id: 1, name: 'Inngest', logo: InngestLogo },
@@ -40,7 +43,17 @@ const stats = [
 	{ value: '500+', label: 'Companies hiring monthly' },
 ];
 
-export default function PostJob() {
+export default async function PostJob() {
+	const user = await requireUser();
+
+	const companyData = await getCompany(user.id as string);
+
+	console.log('🚀 ~ PostJob ~ companyData:', companyData);
+
+	if (!companyData) {
+		return <div>Company not found</div>;
+	}
+
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
 			<div className="col-span-1 px-4 lg:col-span-2">
@@ -53,13 +66,16 @@ export default function PostJob() {
 			</div>
 
 			<div className="col-span-1">
+				<CompanyProfile companyData={companyData as TCompanyProfile} />
+			</div>
+
+			{/* <div className="col-span-1">
 				<Card className="lg:sticky lg:top-4">
 					<CardHeader>
 						<CardTitle className="text-xl">Trusted by Industry Leaders</CardTitle>
 						<CardDescription>Join thousands of companies hiring top talent</CardDescription>
 					</CardHeader>
 					<CardContent className="space-y-6">
-						{/* Company Logos */}
 						<div className="grid grid-cols-3 gap-4">
 							{companies.map((company) => (
 								<div
@@ -76,7 +92,6 @@ export default function PostJob() {
 							))}
 						</div>
 
-						{/* Testimonials */}
 						<div className="space-y-4">
 							{testimonials.map((testimonial, index) => (
 								<blockquote
@@ -90,7 +105,6 @@ export default function PostJob() {
 							))}
 						</div>
 
-						{/* Stats */}
 						<div className="grid grid-cols-2 gap-4">
 							{stats.map((stat, index) => (
 								<div
@@ -103,7 +117,7 @@ export default function PostJob() {
 						</div>
 					</CardContent>
 				</Card>
-			</div>
+			</div> */}
 		</div>
 	);
 }

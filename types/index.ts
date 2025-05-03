@@ -11,3 +11,12 @@ export enum EJobPostStatus {
 	PUBLISHED = 'PUBLISHED',
 	EXPIRED = 'EXPIRED',
 }
+
+export type TCompanyProfile = {
+	name: string;
+	location: string;
+	about: string;
+	logo: string;
+	website: string;
+	xAccount: string;
+};

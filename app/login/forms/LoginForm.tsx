@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 import Github from '@/components/icons/Github';
 import Google from '@/components/icons/Google';
-import { auth, signIn } from '../../utils/auth';
+import { auth, signIn } from '../../../utils/auth';
 import { GeneralSubmitButton } from '@/components/general/SubmitButton';
 import { redirect } from 'next/navigation';
 

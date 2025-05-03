@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { auth } from '@/app/utils/auth';
+import { auth } from '@/utils/auth';
 import { Separator } from '@/components/ui/separator';
 export default async function Home() {
 	const session = await auth();

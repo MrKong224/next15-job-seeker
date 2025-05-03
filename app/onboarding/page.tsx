@@ -1,6 +1,6 @@
 import OnboardingForm from '@/app/onboarding/forms/OnboardingForm';
-import { requireUser } from '@/app/utils/requireUser';
-import { prisma } from '@/app/utils/db';
+import { requireUser } from '@/utils/requireUser';
+import { prisma } from '@/utils/db';
 import { redirect } from 'next/navigation';
 
 const hasFinishedOnBoarding = async (userId: string) => {

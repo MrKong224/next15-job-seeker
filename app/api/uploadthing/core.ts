@@ -1,8 +1,8 @@
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UploadThingError } from 'uploadthing/server';
-import { auth } from '@/app/utils/auth';
+import { auth } from '@/utils/auth';
 import { redirect } from 'next/navigation';
-import { requireUser } from '@/app/utils/requireUser';
+import { requireUser } from '@/utils/requireUser';
 const f = createUploadthing();
 
 // FileRouter for your app, can contain multiple FileRoutes

@@ -1,10 +1,10 @@
 'use server';
 
-import { requireUser } from '@/app/utils/requireUser';
-import { companySchema, jobSeekerSchema } from '@/app/utils/zodSchemas';
+import { requireUser } from '@/utils/requireUser';
+import { companySchema, jobSeekerSchema } from '@/utils/zodSchemas';
 import { z } from 'zod';
-import { prisma } from '@/app/utils/db';
-import arcjet, { detectBot, shield, slidingWindow } from '@/app/utils/arcjet';
+import { prisma } from '@/utils/db';
+import arcjet, { detectBot, shield, slidingWindow } from '@/utils/arcjet';
 import { request } from '@arcjet/next';
 
 const aj = arcjet
@@ -21,6 +21,21 @@ const aj = arcjet
 			allow: [],
 		}),
 	);
+
+export const getCompany = async (userId: string) => {
+	const data = await prisma.company.findUnique({
+		where: { userId: userId },
+		select: {
+			name: true,
+			location: true,
+			about: true,
+			logo: true,
+			website: true,
+			xAccount: true,
+		},
+	});
+	return data;
+};
 
 export async function createCompany(data: z.infer<typeof companySchema>) {
 	const user = await requireUser();

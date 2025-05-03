@@ -2,19 +2,19 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { jobSeekerSchema } from '@/app/utils/zodSchemas';
+import { jobSeekerSchema } from '@/utils/zodSchemas';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { UploadDropzone } from '@/app/utils/UploadThing';
+import { UploadDropzone } from '@/utils/UploadThing';
 import { XIcon } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import PDFImage from '@/public/pdf.png';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createJobSeeker } from '../action';
+import { createJobSeeker } from '../../../action';
 
 export default function JobSeekerForm() {
 	const [pending, setPending] = useState(false);

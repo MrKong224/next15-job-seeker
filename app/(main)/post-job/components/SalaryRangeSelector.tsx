@@ -1,4 +1,4 @@
-import { formatCurrency } from '@/app/utils/formatCurrency';
+import { formatCurrency } from '@/utils/formatCurrency';
 import { Slider } from '@/components/ui/slider';
 import { useState } from 'react';
 import { Control, useController } from 'react-hook-form';
