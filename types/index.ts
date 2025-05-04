@@ -13,6 +13,7 @@ export enum EJobPostStatus {
 }
 
 export type TCompanyProfile = {
+	id: string;
 	name: string;
 	location: string;
 	about: string;
