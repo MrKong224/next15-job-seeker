@@ -51,9 +51,10 @@ export default function CreateJobForm() {
 	const onSubmit = async (data: z.infer<typeof jobPostSchema>) => {
 		try {
 			setPending(true);
-			await createJobPost(data);
-			router.push('/dashboard');
-			toast.success('Job posted successfully');
+			console.log(data);
+			// await createJobPost(data);
+			// router.push('/dashboard');
+			// toast.success('Job posted successfully');
 		} catch (error) {
 			console.log(error);
 			if (error instanceof Error && error.message !== 'NEXT_REDIRECT') {

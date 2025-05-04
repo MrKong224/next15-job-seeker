@@ -146,8 +146,5 @@ export async function createJobPost(data: z.infer<typeof jobPostSchema>) {
 		},
 	});
 
-	console.log('🚀 ~ createJobPost ~ validatedData:', validatedData);
-	console.log('🚀 ~ createJobPost ~ company:', company);
-
 	return { success: true };
 }
