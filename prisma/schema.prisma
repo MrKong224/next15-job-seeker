@@ -34,8 +34,10 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  onboardingCompleted Boolean   @default(false)
+  stripeCustomerId String?
+
   userType            UserType?
+  onboardingCompleted Boolean   @default(false)
 
   Company   Company?
   JobSeeker JobSeeker?
