@@ -51,9 +51,13 @@ export default function CreateJobForm() {
 	const onSubmit = async (data: z.infer<typeof jobPostSchema>) => {
 		try {
 			setPending(true);
-			await createJobPost(data);
-			router.push('/dashboard');
-			toast.success('Job posted successfully');
+			const result = await createJobPost(data);
+			if (result.sessionUrl) {
+				window.location.href = result.sessionUrl;
+			} else {
+				router.push('/dashboard');
+				toast.success('Job posted successfully');
+			}
 		} catch (error) {
 			console.log(error);
 			if (error instanceof Error && error.message !== 'NEXT_REDIRECT') {
@@ -230,7 +234,7 @@ export default function CreateJobForm() {
 					{pending ? (
 						<>
 							<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-							Posting...
+							Submitting...
 						</>
 					) : (
 						'Post Job'
