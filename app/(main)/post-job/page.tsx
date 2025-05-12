@@ -2,7 +2,7 @@ import CreateJobForm from './components/CreateJobForm';
 import { getCompany } from '@/features/action';
 import { requireUser } from '@/features/utils/requireUser';
 import CompanyProfile from './components/CompaynProfile';
-import { TCompanyProfile } from '@/types';
+import { TCompanyProfile } from '@/features/types';
 import { redirect } from 'next/navigation';
 
 export default async function PostJob() {

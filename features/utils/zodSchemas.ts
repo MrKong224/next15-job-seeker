@@ -1,4 +1,4 @@
-import { EEmploymentType, EJobPostStatus } from '@/types';
+import { EEmploymentType, EJobPostStatus } from '@/features/types';
 import { z } from 'zod';
 
 export const companySchema = z.object({

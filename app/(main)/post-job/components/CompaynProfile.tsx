@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { TCompanyProfile } from '@/types';
+import { TCompanyProfile } from '@/features/types';
 import Image from 'next/image';
 import { Textarea } from '@/components/ui/textarea';
 import { countryList } from '@/features/utils/countriesList';

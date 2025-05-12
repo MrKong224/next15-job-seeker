@@ -3,7 +3,7 @@ import { stripe } from '@/features/utils/stripe';
 import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/features/utils/db';
-import { EJobPostStatus } from '@/types';
+import { EJobPostStatus } from '@/features/types';
 
 export async function POST(req: Request) {
 	const body = await req.text();

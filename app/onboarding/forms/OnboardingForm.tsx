@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Logo from '@/public/logo.png';
 import { Card, CardTitle, CardHeader, CardContent } from '../../../components/ui/card';
 import { useState } from 'react';
-import { TUserType } from '@/types';
+import { TUserType } from '@/features/types';
 import UserTypeSelectionForm from './UserTypeSelectionForm';
 import CompanyForm from './CompanyForm';
 import JobSeekerForm from './JobSeekerForm';

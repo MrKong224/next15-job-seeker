@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { TUserType } from '@/types';
+import { TUserType } from '@/features/types';
 import { UserType } from '@prisma/client';
 import { Building2, User2 } from 'lucide-react';
 

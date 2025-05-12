@@ -27,7 +27,8 @@ import { JobListingDuration } from './JobListingDuration';
 import { createJobPost } from '@/features/action';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
-import { EEmploymentType, EJobPostStatus } from '@/types';
+import { EEmploymentType, EJobPostStatus } from '@/features/types';
+import SelectJobLocation from '@/components/general/SelectJobLocation';
 
 export default function CreateJobForm() {
 	const router = useRouter();
@@ -126,36 +127,10 @@ export default function CreateJobForm() {
 									<FormItem>
 										<FormLabel>Location</FormLabel>
 										<FormControl>
-											<Select
-												onValueChange={field.onChange}
-												value={field.value}>
-												<SelectTrigger className="w-full">
-													<SelectValue placeholder="Select location" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														<SelectLabel>Worldwide</SelectLabel>
-														<SelectItem
-															value="WORLDWIDE"
-															className="flex items-center gap-2">
-															<span>🌍</span>
-															<span>Worldwide / Remote</span>
-														</SelectItem>
-													</SelectGroup>
-													<SelectGroup>
-														<SelectLabel>Location</SelectLabel>
-														{countryList.map((country) => (
-															<SelectItem
-																key={country.code}
-																value={country.code}
-																className="flex items-center gap-2">
-																<span>{country.flagEmoji}</span>
-																<span>{country.name}</span>
-															</SelectItem>
-														))}
-													</SelectGroup>
-												</SelectContent>
-											</Select>
+											<SelectJobLocation
+												onChange={field.onChange}
+												value={field.value}
+											/>
 										</FormControl>
 									</FormItem>
 								)}
