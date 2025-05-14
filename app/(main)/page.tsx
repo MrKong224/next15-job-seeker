@@ -1,5 +1,5 @@
-import JobFilter from './main-page/components/JobFilter';
-import JobList from './main-page/components/JobList';
+import JobFilter from './components/JobFilter';
+import JobList from './components/JobList';
 
 type iParam = {
 	searchParams: Promise<{
@@ -20,7 +20,9 @@ export default async function Home({ searchParams }: iParam) {
 
 	return (
 		<div className="grid grid-cols-4 gap-8 mt-4">
-			<JobFilter />
+			<div className="col-span-1 h-fit">
+				<JobFilter />
+			</div>
 			<div className="col-span-3 flex flex-col gap-8">
 				<JobList
 					page={page}

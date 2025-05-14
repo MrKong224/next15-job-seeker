@@ -2,7 +2,7 @@ import { Card, CardContent, CardTitle, CardHeader } from '@/components/ui/card';
 import { prisma } from '@/features/utils/db';
 import { EEmploymentType, EJobPostStatus } from '@/features/types';
 import JobCard from './JobCard';
-import EmptyState from '../../post-job/components/EmptyState';
+import EmptyState from '../post-job/components/EmptyState';
 
 const getJobs = async (param: { page: number; pageSize: number; filter: { jobTypes: string[]; location: string } }) => {
 	const { page, pageSize, filter } = param;
@@ -32,6 +32,7 @@ const getJobs = async (param: { page: number; pageSize: number; filter: { jobTyp
 					select: {
 						name: true,
 						logo: true,
+						about: true,
 					},
 				},
 				createdAt: true,
@@ -66,7 +67,7 @@ export default async function JobList({ page, pageSize, filter }: iProp) {
 	});
 
 	return (
-		<div className="space-y-4">
+		<div className="flex flex-col gap-4">
 			{jobs.length > 0 ? (
 				<>
 					{jobs.map((job) => (
@@ -86,7 +87,7 @@ export default async function JobList({ page, pageSize, filter }: iProp) {
 			)}
 
 			{/* Debug information - can be removed in production */}
-			{process.env.NODE_ENV === 'development' && (
+			{/* {process.env.NODE_ENV === 'development' && (
 				<Card className="w-full mt-8">
 					<CardHeader>
 						<CardTitle>Debug Information</CardTitle>
@@ -98,7 +99,7 @@ export default async function JobList({ page, pageSize, filter }: iProp) {
 						<pre>{JSON.stringify({ filter }, null, 2)}</pre>
 					</CardContent>
 				</Card>
-			)}
+			)} */}
 		</div>
 	);
 }

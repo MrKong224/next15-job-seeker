@@ -1,9 +1,17 @@
-export function getFlagEmoji(location: string): string {
-	const cleanLocation = location.trim().toLowerCase();
+export function getFlagEmoji(locationCode: string): string {
+	const cleanLocation = locationCode.trim().toUpperCase();
 
-	const country = countryList.find((country) => cleanLocation.includes(country.name.toLowerCase()));
+	const country = countryList.find((country) => cleanLocation.includes(country.code.toUpperCase()));
 
 	return country?.flagEmoji || '';
+}
+
+export function getCountryObject(locationCode: string) {
+	const cleanLocation = locationCode.trim().toUpperCase();
+
+	const country = countryList.find((country) => cleanLocation.includes(country.code.toUpperCase()));
+
+	return country;
 }
 
 export const countryList = [

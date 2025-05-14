@@ -17,7 +17,7 @@ export async function NavBar() {
 	const session = await auth();
 
 	return (
-		<nav className="sticky top-0 z-50 w-full shadow-md bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+		<nav className="sticky top-0 z-50 w-full shadow-md bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 lg:px-8">
 			<div className="flex justify-between items-center py-5">
 				<Link
 					href="/"
@@ -46,6 +46,12 @@ export async function NavBar() {
 						className={buttonVariants({ variant: 'ghost' })}
 						passHref>
 						Dashboard
+					</Link>
+					<Link
+						href="/email-jobs"
+						className={buttonVariants({ variant: 'ghost' })}
+						passHref>
+						Email Jobs
 					</Link>
 					<ModeToggle />
 					{session?.user ? (
