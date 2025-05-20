@@ -16,6 +16,9 @@ import { UserDropDown } from './UserDropDown';
 export async function NavBar() {
 	const session = await auth();
 
+	const userType = (session?.user as any).userType;
+	console.log('🚀 ~ NavBar ~ userType:', userType);
+
 	return (
 		<nav className="sticky top-0 z-50 w-full shadow-md bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 lg:px-8">
 			<div className="flex justify-between items-center py-5">
@@ -56,12 +59,14 @@ export async function NavBar() {
 					<ModeToggle />
 					{session?.user ? (
 						<>
-							<Link
-								href="/post-job"
-								className={buttonVariants({ size: 'lg' })}
-								passHref>
-								Post Job
-							</Link>
+							{userType === 'COMPANY' && (
+								<Link
+									href="/post-job"
+									className={buttonVariants({ size: 'lg' })}
+									passHref>
+									Post Job
+								</Link>
+							)}
 							<UserDropDown
 								name={session.user.name as string}
 								email={session.user.email as string}

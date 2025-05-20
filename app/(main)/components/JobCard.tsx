@@ -46,7 +46,10 @@ const formatSalary = (from: number, to: number) => {
 };
 
 const formatCountry = (locationCode: string) => {
-	const country = countryList.find((country) => locationCode.includes(country.code));
+	const country = countryList.find((country) => {
+		return country.code === locationCode;
+	});
+
 	return (
 		<>
 			{country ? (
@@ -55,7 +58,7 @@ const formatCountry = (locationCode: string) => {
 					<span>{country?.name}</span>
 				</>
 			) : (
-				<span className="text-muted-foreground">{locationCode}</span>
+				<span className="text-muted-foreground">🌍 {locationCode}</span>
 			)}
 		</>
 	);
@@ -99,7 +102,7 @@ export default function JobCard({ job }: JobCardProps) {
 							</span>
 							<span className="flex items-center gap-1">
 								<Dot className="text-lg" />
-								<MapPin className="h-3.5 w-3.5" />
+								{/* <MapPin className="h-3.5 w-3.5" /> */}
 								{formatCountry(job.location)}
 							</span>
 						</div>
