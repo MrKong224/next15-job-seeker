@@ -42,6 +42,8 @@ model User {
   Company   Company?
   JobSeeker JobSeeker?
 
+  SavedJobPost SavedJobPost[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -132,4 +134,21 @@ model JobPost {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  SavedJobPost SavedJobPost[]
+}
+
+model SavedJobPost {
+  id String @id @default(uuid())
+
+  jobPostId String
+  jobPost   JobPost @relation(fields: [jobPostId], references: [id], onDelete: Cascade)
+
+  userId String
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, jobPostId])
 }

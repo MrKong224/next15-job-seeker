@@ -4,6 +4,7 @@ import { auth } from '@/features/utils/auth';
 import { prisma } from '@/features/utils/db';
 import { notFound, redirect } from 'next/navigation';
 import { getCountryObject } from '@/features/utils/countriesList';
+import { benefits } from '@/features/utils/benefitsList';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
@@ -12,11 +13,43 @@ import { Card } from '@/components/ui/card';
 import { GeneralSubmitButton } from '@/components/general/SubmitButton';
 import { getFlagEmoji } from '@/features/utils/countriesList';
 import Image from 'next/image';
+import arcjet, { detectBot } from '@/features/utils/arcjet';
+import { fixedWindow, request, tokenBucket } from '@arcjet/next';
+import { Separator } from '@/components/ui/separator';
 
 type iParam = {
 	params: Promise<{
 		id: string;
 	}>;
+};
+
+const aj = arcjet.withRule(
+	detectBot({
+		mode: 'LIVE',
+		allow: ['CATEGORY:SEARCH_ENGINE', 'CATEGORY:PREVIEW'],
+	}),
+);
+
+const getClient = (session: boolean) => {
+	if (session) {
+		return aj.withRule(
+			tokenBucket({
+				mode: 'LIVE',
+				capacity: 100,
+				interval: '60s',
+				refillRate: 30,
+			}),
+		);
+	} else {
+		return aj.withRule(
+			tokenBucket({
+				mode: 'LIVE',
+				capacity: 100,
+				interval: '60s',
+				refillRate: 10,
+			}),
+		);
+	}
 };
 
 const getJobData = async (jobId: string) => {
@@ -32,6 +65,7 @@ const getJobData = async (jobId: string) => {
 			jobDescription: true,
 			createdAt: true,
 			listingDuration: true,
+			benefits: true,
 			company: {
 				select: {
 					name: true,
@@ -51,8 +85,11 @@ export default async function JobDetail({ params }: iParam) {
 
 	const session = await auth();
 
-	if (!session) {
-		return redirect('/login');
+	const req = await request();
+	const decision = await getClient(!!session).protect(req, { requested: 5 });
+
+	if (decision.isDenied()) {
+		throw new Error('forbidden');
 	}
 
 	const jobData = await getJobData(id);
@@ -109,14 +146,25 @@ export default async function JobDetail({ params }: iParam) {
 						<JsonToHtml json={JSON.parse(jobData.jobDescription)} />
 					</section>
 
+					<Separator />
+
 					{/* Benefits */}
 					<section>
-						<h3 className="text-lg font-semibold">
-							Benefits{' '}
-							<span className="text-sm text-muted-foreground font-normal">
-								(green is offered and red is not offered)
-							</span>
-						</h3>
+						<h3 className="text-lg font-semibold mb-3">Benefits</h3>
+						<div className="flex flex-wrap gap-3">
+							{benefits.map(
+								(benefit) =>
+									jobData.benefits.includes(benefit.id) && (
+										<Badge
+											key={benefit.id}
+											variant={'secondary'}
+											className="text-sm px-4 py-1.5">
+											{benefit.icon}
+											{benefit.label}
+										</Badge>
+									),
+							)}
+						</div>
 					</section>
 				</div>
 

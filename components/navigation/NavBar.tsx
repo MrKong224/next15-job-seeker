@@ -17,7 +17,6 @@ export async function NavBar() {
 	const session = await auth();
 
 	const userType = (session?.user as any).userType;
-	console.log('🚀 ~ NavBar ~ userType:', userType);
 
 	return (
 		<nav className="sticky top-0 z-50 w-full shadow-md bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 md:px-6 lg:px-8">
