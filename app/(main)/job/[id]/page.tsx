@@ -7,7 +7,7 @@ import { getCountryObject } from '@/features/utils/countriesList';
 import { benefits } from '@/features/utils/benefitsList';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Heart } from 'lucide-react';
+import { Heart, ArrowLeft } from 'lucide-react';
 import { JsonToHtml } from '@/components/general/JsonHtml';
 import { Card } from '@/components/ui/card';
 import { GeneralSubmitButton } from '@/components/general/SubmitButton';
@@ -102,6 +102,14 @@ export default async function JobDetail({ params }: iParam) {
 
 	return (
 		<div className="container mx-auto py-8">
+			<div className="mb-4">
+				<Link
+					href={'/'}
+					className="inline-flex items-center text-muted-foreground hover:text-foreground">
+					<ArrowLeft className="mr-2 h-4 w-4" />
+					Back to jobs
+				</Link>
+			</div>
 			<div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
 				{/* Main Content */}
 				<div className="lg:col-span-3 transition-all duration-300 p-4 space-y-8">
